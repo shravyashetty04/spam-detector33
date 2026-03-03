@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, ShieldAlert, ShieldCheck, Send, RotateCcw } from "lucide-react";
+import { Shield, ShieldAlert, ShieldCheck, Send, RotateCcw, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { checkSpam } from "@/lib/spamApi";
+import { useAuth } from "@/contexts/AuthContext";
 
 const EXAMPLE_COMMENTS = [
   "This song is amazing! Love the beat 🎶",
@@ -16,6 +18,8 @@ const EXAMPLE_COMMENTS = [
 type ResultState = { isSpam: boolean; comment: string } | null;
 
 export default function SpamDetector() {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ResultState>(null);
@@ -41,7 +45,32 @@ export default function SpamDetector() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16 relative">
+      {/* Auth bar */}
+      <div className="absolute top-4 right-4 flex items-center gap-3">
+        {user ? (
+          <>
+            <span className="text-sm text-muted-foreground flex items-center gap-1.5">
+              <User className="h-3.5 w-3.5" />
+              {user.email}
+            </span>
+            <Button variant="outline" size="sm" onClick={signOut} className="gap-1.5">
+              <LogOut className="h-3.5 w-3.5" />
+              Sign out
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button variant="outline" size="sm" onClick={() => navigate("/login")}>
+              Sign in
+            </Button>
+            <Button size="sm" onClick={() => navigate("/register")}>
+              Sign up
+            </Button>
+          </>
+        )}
+      </div>
+      
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
