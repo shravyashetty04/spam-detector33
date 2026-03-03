@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, ShieldAlert, ShieldCheck, Send, RotateCcw } from "lucide-react";
+import { Shield, ShieldAlert, ShieldCheck, Send, RotateCcw, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { checkSpam } from "@/lib/spamApi";
+import { useAuth } from "@/contexts/AuthContext";
 
 const EXAMPLE_COMMENTS = [
   "This song is amazing! Love the beat 🎶",
