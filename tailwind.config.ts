@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        display: ['"Bebas Neue"', "sans-serif"],
+        mono: ['"IBM Plex Mono"', "monospace"],
+        body: ['"IBM Plex Sans"', "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -81,7 +82,7 @@ export default {
           to: { height: "0" },
         },
         "pulse-glow": {
-          "0%, 100%": { opacity: "0.4" },
+          "0%, 100%": { opacity: "0.3" },
           "50%": { opacity: "1" },
         },
       },
